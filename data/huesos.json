@@ -1,0 +1,37 @@
+[
+  {
+    "id": "humero",
+    "nombre": "Húmero",
+    "region": "brazo",
+    "tipo": "largo",
+    "descripcion": "Hueso largo del brazo, entre la escápula y los huesos del antebrazo."
+  },
+  {
+    "id": "escapula",
+    "nombre": "Escápula",
+    "region": "hombro",
+    "tipo": "plano",
+    "descripcion": "Hueso plano y triangular de la parte posterior del hombro."
+  },
+  {
+    "id": "clavicula",
+    "nombre": "Clavícula",
+    "region": "hombro",
+    "tipo": "largo",
+    "descripcion": "Hueso en forma de S que une el esternón con la escápula."
+  },
+  {
+    "id": "radio",
+    "nombre": "Radio",
+    "region": "antebrazo",
+    "tipo": "largo",
+    "descripcion": "Hueso lateral del antebrazo, del lado del pulgar."
+  },
+  {
+    "id": "cubito",
+    "nombre": "Cúbito",
+    "region": "antebrazo",
+    "tipo": "largo",
+    "descripcion": "Hueso medial del antebrazo, del lado del meñique."
+  }
+]

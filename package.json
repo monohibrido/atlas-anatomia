@@ -1,0 +1,9 @@
+{
+  "name": "atlas-anatomia",
+  "version": "1.0.0",
+  "description": "API pública y atlas de anatomía humana en español",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-api.js"
+  }
+}

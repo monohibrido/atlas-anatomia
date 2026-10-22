@@ -1,0 +1,13 @@
+{
+  "rewrites": [
+    { "source": "/api/v1", "destination": "/api/v1/index.json" },
+    { "source": "/api/v1/:recurso", "destination": "/api/v1/:recurso.json" },
+    { "source": "/api/v1/:recurso/:id", "destination": "/api/v1/:recurso/:id.json" }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [{ "key": "Access-Control-Allow-Origin", "value": "*" }]
+    }
+  ]
+}

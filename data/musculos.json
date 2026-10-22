@@ -1,0 +1,42 @@
+[
+  {
+    "id": "biceps-braquial",
+    "nombre": "Bíceps braquial",
+    "region": "brazo",
+    "origen": [
+      { "descripcion": "Cabeza larga: tubérculo supraglenoideo", "hueso": "escapula" },
+      { "descripcion": "Cabeza corta: apófisis coracoides", "hueso": "escapula" }
+    ],
+    "insercion": [
+      { "descripcion": "Tuberosidad del radio", "hueso": "radio" }
+    ],
+    "funcion": "Flexión del codo y supinación del antebrazo."
+  },
+  {
+    "id": "triceps-braquial",
+    "nombre": "Tríceps braquial",
+    "region": "brazo",
+    "origen": [
+      { "descripcion": "Cabeza larga: tubérculo infraglenoideo", "hueso": "escapula" },
+      { "descripcion": "Cabeza lateral: cara posterior, sobre el surco del nervio radial", "hueso": "humero" },
+      { "descripcion": "Cabeza medial: cara posterior, bajo el surco del nervio radial", "hueso": "humero" }
+    ],
+    "insercion": [
+      { "descripcion": "Olécranon", "hueso": "cubito" }
+    ],
+    "funcion": "Extensión del codo. La cabeza larga también extiende y aduce el brazo."
+  },
+  {
+    "id": "deltoides",
+    "nombre": "Deltoides",
+    "region": "hombro",
+    "origen": [
+      { "descripcion": "Tercio lateral de la clavícula", "hueso": "clavicula" },
+      { "descripcion": "Acromion y espina de la escápula", "hueso": "escapula" }
+    ],
+    "insercion": [
+      { "descripcion": "Tuberosidad deltoidea", "hueso": "humero" }
+    ],
+    "funcion": "Abducción del brazo (fibras medias). Las fibras anteriores flexionan y rotan medialmente; las posteriores extienden y rotan lateralmente."
+  }
+]
