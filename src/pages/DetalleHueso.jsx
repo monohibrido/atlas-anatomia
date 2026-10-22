@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { useApi } from "../hooks/useApi.js";
 import { Cargando, ErrorMensaje } from "../components/Estado.jsx";
+import ImagenAnatomica from "../components/ImagenAnatomica.jsx";
 
 function ListaMusculos({ musculos }) {
   if (musculos.length === 0) {
@@ -36,6 +37,8 @@ export default function DetalleHueso() {
         Región: {hueso.region} · Tipo: {hueso.tipo}
       </p>
       <p className="mt-4">{hueso.descripcion}</p>
+
+      <ImagenAnatomica imagen={hueso.imagen} alt={`Ilustración de ${hueso.nombre}`} />
 
       <h2 className="mt-8 text-xl font-semibold">Músculos que se originan aquí</h2>
       <ListaMusculos musculos={hueso.musculos_origen} />

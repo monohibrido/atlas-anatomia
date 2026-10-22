@@ -1,4 +1,4 @@
-import { readFile, writeFile, mkdir, rm } from "node:fs/promises";
+import { readFile, writeFile, mkdir, rm, access } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -6,6 +6,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const RAIZ = path.join(__dirname, "..");
 const DATA = path.join(RAIZ, "data");
 const SALIDA = path.join(RAIZ, "public", "api", "v1");
+const IMAGENES = path.join(RAIZ, "public", "img");
 const BASE = "/api/v1";
 
 const leerJSON = async (archivo) =>
@@ -20,6 +21,17 @@ async function escribir(ruta, contenido) {
 const refHueso = (h) => ({ id: h.id, nombre: h.nombre, url: `${BASE}/huesos/${h.id}` });
 const refMusculo = (m) => ({ id: m.id, nombre: m.nombre, url: `${BASE}/musculos/${m.id}` });
 
+// Convierte los datos de la imagen en lo que mostrará la API (con la URL completa)
+const refImagen = (tipo, imagen) =>
+    imagen
+        ? {
+            url: `/img/${tipo}/${imagen.archivo}`,
+            autor: imagen.autor,
+            licencia: imagen.licencia,
+            fuente: imagen.fuente,
+        }
+        : null;
+
 function validarIdsUnicos(lista, tipo) {
     const vistos = new Set();
     for (const item of lista) {
@@ -30,12 +42,34 @@ function validarIdsUnicos(lista, tipo) {
     }
 }
 
+// Verifica que la imagen tenga todos sus datos y que el archivo exista
+async function validarImagen(tipo, item) {
+    if (!item.imagen) return;
+    const { archivo, autor, licencia, fuente } = item.imagen;
+
+    if (!archivo || !autor || !licencia || !fuente) {
+        throw new Error(
+            `La imagen de "${item.id}" debe tener archivo, autor, licencia y fuente.`
+        );
+    }
+    try {
+        await access(path.join(IMAGENES, tipo, archivo));
+    } catch {
+        throw new Error(
+            `Falta el archivo de imagen de "${item.id}": public/img/${tipo}/${archivo}`
+        );
+    }
+}
+
 async function main() {
     const musculos = await leerJSON("musculos.json");
     const huesos = await leerJSON("huesos.json");
 
     validarIdsUnicos(musculos, "músculos");
     validarIdsUnicos(huesos, "huesos");
+
+    for (const m of musculos) await validarImagen("musculos", m);
+    for (const h of huesos) await validarImagen("huesos", h);
 
     const huesosPorId = new Map(huesos.map((h) => [h.id, h]));
 
@@ -54,14 +88,16 @@ async function main() {
 
         return {
             ...m,
+            imagen: refImagen("musculos", m.imagen),
             origen: convertir(m.origen, "origen"),
             insercion: convertir(m.insercion, "insercion"),
         };
     });
 
-    // Huesos: agrega automáticamente los músculos relacionados (relación inversa)
+    // Huesos: copia todos sus campos (...h) y agrega la imagen y los músculos relacionados
     const huesosSalida = huesos.map((h) => ({
         ...h,
+        imagen: refImagen("huesos", h.imagen),
         musculos_origen: musculos
             .filter((m) => m.origen.some((p) => p.hueso === h.id))
             .map(refMusculo),
@@ -80,13 +116,22 @@ async function main() {
 
     await escribir("musculos.json", {
         count: musculosSalida.length,
-        results: musculosSalida.map((m) => ({ ...refMusculo(m), region: m.region })),
+        results: musculosSalida.map((m) => ({
+            ...refMusculo(m),
+            region: m.region,
+            imagen: m.imagen?.url ?? null,
+        })),
     });
     for (const m of musculosSalida) await escribir(`musculos/${m.id}.json`, m);
 
     await escribir("huesos.json", {
         count: huesosSalida.length,
-        results: huesosSalida.map((h) => ({ ...refHueso(h), region: h.region, tipo: h.tipo })),
+        results: huesosSalida.map((h) => ({
+            ...refHueso(h),
+            region: h.region,
+            tipo: h.tipo,
+            imagen: h.imagen?.url ?? null,
+        })),
     });
     for (const h of huesosSalida) await escribir(`huesos/${h.id}.json`, h);
 

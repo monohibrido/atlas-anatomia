@@ -4,7 +4,13 @@
     "nombre": "Húmero",
     "region": "brazo",
     "tipo": "largo",
-    "descripcion": "Hueso largo del brazo, entre la escápula y los huesos del antebrazo."
+    "descripcion": "Hueso largo del brazo, entre la escápula y los huesos del antebrazo.",
+    "imagen": {
+      "archivo": "humero.webp",
+      "autor": "IA",
+      "licencia": "Propia",
+      "fuente": "https://example.com"
+    }
   },
   {
     "id": "escapula",

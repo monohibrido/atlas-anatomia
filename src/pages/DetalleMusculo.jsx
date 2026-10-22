@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { useApi } from "../hooks/useApi.js";
 import { Cargando, ErrorMensaje } from "../components/Estado.jsx";
+import ImagenAnatomica from "../components/ImagenAnatomica.jsx";
 
 function Puntos({ puntos }) {
   return (
@@ -34,6 +35,8 @@ export default function DetalleMusculo() {
       </Link>
       <h1 className="mt-2 text-3xl font-bold">{musculo.nombre}</h1>
       <p className="text-slate-500 capitalize">Región: {musculo.region}</p>
+
+      <ImagenAnatomica imagen={musculo.imagen} alt={`Ilustración de ${musculo.nombre}`} />
 
       <h2 className="mt-8 text-xl font-semibold">Origen</h2>
       <Puntos puntos={musculo.origen} />
